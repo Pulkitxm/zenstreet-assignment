@@ -1,0 +1,34 @@
+{
+  "name": "zenstreet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "clean": "rm -rf .next && rm -rf node_modules",
+    "dev:clean": "pnpm clean && pnpm install && pnpm run dev",
+    "build": "next build",
+    "build:clean": "pnpm clean && pnpm install && pnpm run build",
+    "start": "next start",
+    "serve": "pnpm build && pnpm start",
+    "serve:clean": "pnpm build:clean && pnpm start",
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\""
+  },
+  "dependencies": {
+    "next": "15.0.3",
+    "prettier": "^3.4.1",
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
