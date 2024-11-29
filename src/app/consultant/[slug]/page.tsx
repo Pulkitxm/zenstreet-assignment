@@ -1,9 +1,13 @@
 "use client";
 
-import consultants from "@/data/consultants";
+import { useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { MapPin } from "lucide-react";
+import Link from "next/link";
+import { MapPin, Share2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ShareDialog } from "@/components/share-dialog";
+import consultants from "@/data/consultants";
 
 export default function TherapistProfile({
   params: { slug },
@@ -24,8 +28,11 @@ const DisplayProfile = ({
 }: {
   therapist: (typeof consultants)[number];
 }) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const pageUrl = typeof window !== "undefined" ? window.location.href : "";
+
   return (
-    <div className="flex flex-col md:flex-row gap-8 p-6 max-w-6xl mx-auto ">
+    <div className="flex flex-col md:flex-row gap-8 p-6 max-w-6xl mx-auto">
       <div className="flex flex-col items-center bg-[#1F9FE6] text-white p-10 rounded-lg md:w-1/3">
         <div className="bg-white text-black p-6 rounded-lg w-full ">
           <div className="relative">
@@ -38,20 +45,18 @@ const DisplayProfile = ({
                 className="w-32 h-32 rounded-lg object-cover"
               />
             </div>
-            <button
-              className="absolute top-0 right-0 text-[#1F9FE6] bg-white rounded-full p-2 shadow-md"
-              aria-label="Share profile"
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-0 right-0 text-[#1F9FE6] bg-white rounded-full shadow-md"
+              onClick={() => setIsShareOpen(true)}
             >
-              <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em">
-                <path
-                  fill="currentColor"
-                  d="M18 9a3 3 0 10-2.977-2.63l-6.94 3.47a3 3 0 100 4.319l6.94 3.47a3 3 0 10.895-1.789l-6.94-3.47a3.03 3.03 0 000-.74l6.94-3.47C16.456 8.68 17.19 9 18 9z"
-                />
-              </svg>
-            </button>
+              <Share2 className="w-4 h-4" />
+              <span className="sr-only">Share profile</span>
+            </Button>
           </div>
           <div className="flex items-center justify-center mt-4 gap-2">
-            <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em">
+            <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em" onClick={() => setIsShareOpen(true)}>
               <path
                 fill="currentColor"
                 d="M18 9a3 3 0 10-2.977-2.63l-6.94 3.47a3 3 0 100 4.319l6.94 3.47a3 3 0 10.895-1.789l-6.94-3.47a3.03 3.03 0 000-.74l6.94-3.47C16.456 8.68 17.19 9 18 9z"
@@ -68,10 +73,13 @@ const DisplayProfile = ({
             <MapPin className="w-5 h-5 mr-2" />
             {therapist.located}
           </p>
-        </div>{" "}
-        <button className="mt-6 py-2 px-6 w-full bg-white text-[#1F9FE6] font-medium rounded-full shadow-md">
+        </div>
+        <Link
+          href={`/consultant/${therapist.slug}/book`}
+          className="mt-6 py-2 px-6 w-full bg-white flex justify-center items-center text-[#1F9FE6] font-medium rounded-full shadow-md"
+        >
           Book session
-        </button>
+        </Link>
       </div>
 
       <div className="w-full md:w-2/3">
@@ -133,18 +141,6 @@ const DisplayProfile = ({
           </div>
         </div>
 
-        <div className="mt-8">
-          <p className="mb-2">I offer therapy for</p>
-          {therapist.therapyOfferings.map((offering, index) => (
-            <div
-              key={index}
-              className="py-2 px-4 text-sm m-2 inline-flex justify-center items-center  border-2 border-[#1F9FE6] rounded-full"
-            >
-              {offering}
-            </div>
-          ))}
-        </div>
-
         <div className="flex flex-col md:flex-row gap-8 mt-8">
           <div className="flex-1">
             <div className="flex gap-1 items-center justify-center text-lg font-semibold">
@@ -194,6 +190,14 @@ const DisplayProfile = ({
           </ul>
         </div>
       </div>
+
+      <ShareDialog
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        pageUrl={pageUrl}
+        socials={therapist.socials}
+      />
     </div>
   );
 };
+

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface NotificationProps {
   message: string;
-  variant?: "orange" | "green";
+  variant?: "orange" | "green" | "blue";
   onClose?: () => void;
 }
 
@@ -17,9 +17,11 @@ export function Notification({
       className={cn(
         "flex items-center justify-between rounded-xl p-4 text-lg",
         variant === "orange" &&
-          "bg-[#3D1D00] text-orange-400 border border-orange-400",
+          "bg-orange-100 text-orange-400 border-orange-400 border-2",
         variant === "green" &&
-          "bg-[#002B1D] text-emerald-400 border border-emerald-400"
+          "bg-green-100 text-green-400 border-green-400 border-2",
+        variant === "blue" &&
+          "bg-blue-100 text-blue-400 border-blue-400 border-2",
       )}
     >
       <div className="flex items-center gap-3">

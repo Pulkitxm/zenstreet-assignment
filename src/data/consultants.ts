@@ -92,7 +92,7 @@ const consultants = [
       twitter: "https://www.twitter.com",
       linkedin: "https://www.linkedin.com",
       mail: "mailto:xyz@abc.com",
-    }
+    },
   },
 ].map((consultant) => ({
   ...consultant,
@@ -100,7 +100,7 @@ const consultants = [
   averageRating:
     consultant.testimonials.reduce(
       (sum, testimonial) => sum + testimonial.stars,
-      0
+      0,
     ) / consultant.testimonials.length,
 }));
 
